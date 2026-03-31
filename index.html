@@ -9,64 +9,52 @@
 <body>
   <main class="container">
     <header class="hero">
-      <div class="hero__inner">
-        <p class="hero__eyebrow">Ceremonia</p>
-        <h1 class="hero__brand">Abuela Tata</h1>
-        <h2 class="hero__title">Calculadora de tallas</h2>
-        <p class="hero__text">
-          Selecciona la prenda y rellena las medidas. La calculadora comparará los datos
-          con la tabla correspondiente sin necesidad de tocar este archivo si cambian las medidas.
-        </p>
-      </div>
+      <p class="hero__eyebrow">Ceremonia</p>
+      <h1 class="hero__brand">Abuela Tata</h1>
+      <h2 class="hero__title">Calculadora de tallas</h2>
+      <p class="hero__text">
+        Selecciona la prenda y rellena las medidas. La calculadora usa la tabla de medidas de prenda terminada
+        y aplica la lógica de talla correspondiente según el tipo de prenda.
+      </p>
     </header>
 
     <section class="card">
-      <div class="field-group">
-        <label for="prendaSelect" class="label">Selecciona prenda</label>
-        <select id="prendaSelect" class="input"></select>
-      </div>
-
-      <div id="estadoPrenda" class="status" aria-live="polite"></div>
+      <label for="prendaSelect" class="label">Selecciona prenda</label>
+      <select id="prendaSelect" class="input"></select>
+      <div id="estadoPrenda" class="status"></div>
     </section>
 
     <section class="card">
       <div class="section-head">
         <h3>Medidas</h3>
-        <p>Los campos cambian según la prenda elegida.</p>
+        <p>Introduce solo las medidas que tengas. La prenda principal manda en la elección de talla.</p>
       </div>
 
       <form id="medidasForm" class="form-grid" autocomplete="off">
-        <!-- Campos dinámicos -->
+        <div id="campos"></div>
       </form>
 
       <div class="actions">
-        <button type="button" id="calcularBtn" class="btn btn--primary">
-          Calcular talla
-        </button>
-        <button type="button" id="limpiarBtn" class="btn btn--ghost">
-          Limpiar
-        </button>
+        <button type="button" id="calcularBtn" class="btn btn--primary">Calcular talla</button>
+        <button type="button" id="limpiarBtn" class="btn btn--ghost">Limpiar</button>
       </div>
     </section>
 
-    <section class="card result-card">
+    <section class="card">
       <div class="section-head">
         <h3>Resultado</h3>
-        <p>Talla sugerida según la tabla de la prenda seleccionada.</p>
       </div>
-
       <div id="resultado" class="resultado resultado--empty">
         Aún no se ha calculado ninguna talla.
       </div>
-
       <div id="detalleComparacion" class="detalle-comparacion"></div>
     </section>
 
     <section class="card">
-      <details>
+      <details open>
         <summary>Tabla de referencia</summary>
         <div class="table-wrap">
-          <table id="tablaReferencia" class="tabla">
+          <table class="tabla" id="tablaReferencia">
             <thead id="tablaHead"></thead>
             <tbody id="tablaBody"></tbody>
           </table>
