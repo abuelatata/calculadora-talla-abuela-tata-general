@@ -55,7 +55,7 @@ function getReglaPrincipal(prendaKey) {
       return {
         campo: "pecho",
         holgura: 2,
-        descripcion: "La talla se calcula principalmente por pecho con 2 cm de holgura."
+        descripcion: "La talla se calcula automaticamente con una holgura 2 cm en el pecho ."
       };
 
     case "camisa":
