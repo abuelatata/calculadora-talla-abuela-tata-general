@@ -1,0 +1,131 @@
+{
+  "items": {
+
+    "vestido": {
+      "label": "Vestido",
+      "status": "active",
+      "fields": [
+        {"key":"pecho","label":"Pecho (cm)"},
+        {"key":"cintura","label":"Cintura (cm)"},
+        {"key":"talle","label":"Talle (cm)"},
+        {"key":"espalda","label":"Espalda (cm)"},
+        {"key":"cont_manga","label":"Contorno manga (cm)"},
+        {"key":"l_falda","label":"Largo falda (cm)"},
+        {"key":"l_total","label":"Largo total (cm)"}
+      ],
+      "sizes": [
+        {"talla":"2","pecho":54,"cintura":54,"talle":18,"espalda":23,"cont_manga":19.5,"l_falda":28,"l_total":46},
+        {"talla":"3","pecho":56,"cintura":56,"talle":19,"espalda":24,"cont_manga":20.5,"l_falda":30,"l_total":49},
+        {"talla":"4","pecho":58,"cintura":58,"talle":20,"espalda":24.5,"cont_manga":21.2,"l_falda":33,"l_total":53},
+        {"talla":"5","pecho":60,"cintura":60,"talle":20.5,"espalda":25.5,"cont_manga":22.5,"l_falda":37,"l_total":57.5},
+        {"talla":"6","pecho":62,"cintura":62,"talle":21.5,"espalda":26.5,"cont_manga":23.5,"l_falda":38,"l_total":59.5},
+        {"talla":"7","pecho":64,"cintura":64,"talle":22.5,"espalda":27,"cont_manga":24.5,"l_falda":40,"l_total":62.5},
+        {"talla":"8","pecho":66,"cintura":66,"talle":23,"espalda":28,"cont_manga":25.5,"l_falda":41,"l_total":64},
+        {"talla":"9","pecho":68,"cintura":68,"talle":24,"espalda":29,"cont_manga":26.5,"l_falda":42.5,"l_total":66.5},
+        {"talla":"10","pecho":70,"cintura":70,"talle":25,"espalda":30,"cont_manga":27.5,"l_falda":44,"l_total":69},
+        {"talla":"11","pecho":72,"cintura":72,"talle":25.5,"espalda":31,"cont_manga":28.5,"l_falda":46,"l_total":71.5},
+        {"talla":"12","pecho":74,"cintura":74,"talle":26.5,"espalda":32,"cont_manga":29.5,"l_falda":48,"l_total":74.5}
+      ]
+    },
+
+    "jesusito": {
+      "label": "Jesusito",
+      "status": "active",
+      "fields": [
+        {"key":"pecho","label":"Pecho (cm)"},
+        {"key":"cintura","label":"Cintura (cm)"},
+        {"key":"talle","label":"Talle (cm)"},
+        {"key":"espalda","label":"Espalda (cm)"},
+        {"key":"cont_manga","label":"Contorno manga (cm)"},
+        {"key":"l_falda","label":"Largo falda (cm)"},
+        {"key":"l_total","label":"Largo total (cm)"}
+      ],
+      "sizes": [
+        {"talla":"3M","pecho":23,"cintura":46,"talle":13.5,"espalda":17,"cont_manga":18,"l_falda":16,"l_total":29.5},
+        {"talla":"6M","pecho":24,"cintura":48.5,"talle":14,"espalda":18,"cont_manga":19,"l_falda":16.5,"l_total":30.5},
+        {"talla":"9M","pecho":26,"cintura":52.5,"talle":15,"espalda":19,"cont_manga":20,"l_falda":19,"l_total":34},
+        {"talla":"12M","pecho":27,"cintura":55,"talle":15.5,"espalda":19.5,"cont_manga":21,"l_falda":22,"l_total":37.5},
+        {"talla":"18M","pecho":28,"cintura":57,"talle":16,"espalda":20.5,"cont_manga":21.5,"l_falda":23.5,"l_total":39.5},
+        {"talla":"2","pecho":29.5,"cintura":59,"talle":16.5,"espalda":21,"cont_manga":22.5,"l_falda":25,"l_total":41.5},
+        {"talla":"3","pecho":30.5,"cintura":61,"talle":17,"espalda":22,"cont_manga":23.5,"l_falda":26.5,"l_total":43.5},
+        {"talla":"4","pecho":31.5,"cintura":63,"talle":17.5,"espalda":23,"cont_manga":24.5,"l_falda":27.5,"l_total":45}
+      ]
+    },
+
+    "camisa": {
+      "label": "Camisa",
+      "status": "active",
+      "fields": [
+        {"key":"pecho","label":"Pecho (cm)"},
+        {"key":"l_manga","label":"Largo manga (cm)"},
+        {"key":"l_camisa","label":"Largo camisa (cm)"}
+      ],
+      "sizes": [
+        {"talla":"3M","pecho":51,"l_manga":28.5,"l_camisa":34},
+        {"talla":"6M","pecho":53.5,"l_manga":30,"l_camisa":35.5},
+        {"talla":"9M","pecho":55.5,"l_manga":32,"l_camisa":37.5},
+        {"talla":"12M","pecho":58,"l_manga":33.5,"l_camisa":39},
+        {"talla":"18M","pecho":60,"l_manga":35,"l_camisa":41},
+        {"talla":"2","pecho":62,"l_manga":37,"l_camisa":43},
+        {"talla":"3","pecho":64.5,"l_manga":39,"l_camisa":45},
+        {"talla":"4","pecho":66.5,"l_manga":41,"l_camisa":47},
+        {"talla":"5","pecho":69,"l_manga":42.5,"l_camisa":50},
+        {"talla":"6","pecho":71,"l_manga":44.5,"l_camisa":52},
+        {"talla":"8","pecho":73,"l_manga":46.5,"l_camisa":54},
+        {"talla":"10","pecho":75,"l_manga":48.5,"l_camisa":56.5},
+        {"talla":"12","pecho":77.5,"l_manga":50,"l_camisa":59}
+      ]
+    },
+
+    "pantalon_43": {
+      "label": "Pantalón ref. 43",
+      "status": "active",
+      "fields": [
+        {"key":"cintura","label":"Cintura (cm)"},
+        {"key":"cadera","label":"Cadera (cm)"},
+        {"key":"largo","label":"Largo (cm)"}
+      ],
+      "sizes": [
+        {"talla":"3M","cintura":45,"cadera":51,"largo":21},
+        {"talla":"6M","cintura":47,"cadera":53,"largo":22},
+        {"talla":"9M","cintura":49,"cadera":55,"largo":23},
+        {"talla":"12M","cintura":51,"cadera":57,"largo":24},
+        {"talla":"18M","cintura":52,"cadera":59,"largo":25},
+        {"talla":"2","cintura":55,"cadera":61,"largo":26},
+        {"talla":"3","cintura":57,"cadera":63,"largo":27},
+        {"talla":"4","cintura":59,"cadera":65,"largo":28},
+        {"talla":"5","cintura":61,"cadera":67,"largo":29},
+        {"talla":"6","cintura":63,"cadera":69,"largo":30},
+        {"talla":"8","cintura":65,"cadera":71,"largo":31},
+        {"talla":"10","cintura":69,"cadera":73,"largo":32},
+        {"talla":"12","cintura":71,"cadera":75,"largo":33}
+      ]
+    },
+
+    "pantalon_20": {
+      "label": "Pantalón ref. 20 / Braguita",
+      "status": "active",
+      "fields": [
+        {"key":"cintura","label":"Cintura (cm)"},
+        {"key":"cadera","label":"Cadera (cm)"},
+        {"key":"largo","label":"Largo (cm)"}
+      ],
+      "sizes": [
+        {"talla":"3M","cintura":47,"cadera":50,"largo":17},
+        {"talla":"6M","cintura":49,"cadera":51.5,"largo":17.5},
+        {"talla":"9M","cintura":51,"cadera":53.5,"largo":17.8},
+        {"talla":"12M","cintura":53,"cadera":55,"largo":18},
+        {"talla":"18M","cintura":55.5,"cadera":57.5,"largo":18.5},
+        {"talla":"2","cintura":57.5,"cadera":60,"largo":19},
+        {"talla":"3","cintura":60,"cadera":62.5,"largo":19.5},
+        {"talla":"4","cintura":62.5,"cadera":65,"largo":20},
+        {"talla":"5","cintura":65,"cadera":67.5,"largo":20.5},
+        {"talla":"6","cintura":67,"cadera":70,"largo":21},
+        {"talla":"8","cintura":69.5,"cadera":72.5,"largo":21.5},
+        {"talla":"10","cintura":72,"cadera":75,"largo":22},
+        {"talla":"12","cintura":74,"cadera":78,"largo":22.5}
+      ]
+    }
+
+  }
+}
