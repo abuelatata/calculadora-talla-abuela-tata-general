@@ -142,3 +142,10 @@ body {
   margin-top: 5px;
   color: #8b6f5b;
 }
+small {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #8b6f5b;
+  line-height: 1.4;
+}
