@@ -20,19 +20,14 @@ async function init() {
     MEDIDAS = data.items || {};
     cargarSelector();
   } catch (error) {
-    console.error("Error cargando medidas.json:", error);
-    estadoPrenda.textContent = "No se pudo cargar la tabla de medidas.";
+    estadoPrenda.textContent = "Error cargando datos.";
   }
 }
 
 function cargarSelector() {
   prendaSelect.innerHTML = "";
 
-  const keys = Object.keys(MEDIDAS).filter((key) => {
-    return !Array.isArray(MEDIDAS[key]);
-  });
-
-  keys.forEach((key) => {
+  Object.keys(MEDIDAS).forEach((key) => {
     const item = MEDIDAS[key];
     if (!item || item.status !== "active") return;
 
@@ -53,12 +48,7 @@ function cargarSelector() {
 
 function resolveItem(key) {
   const item = MEDIDAS[key];
-  if (!item) return null;
-
-  if (item.aliasOf) {
-    return MEDIDAS[item.aliasOf];
-  }
-
+  if (item.aliasOf) return MEDIDAS[item.aliasOf];
   return item;
 }
 
@@ -66,16 +56,8 @@ function renderPrenda() {
   const itemOriginal = MEDIDAS[PRENDA_ACTUAL];
   const item = resolveItem(PRENDA_ACTUAL);
 
-  if (!itemOriginal || !item) {
-    estadoPrenda.textContent = "Prenda no disponible.";
-    medidasForm.innerHTML = "";
-    tablaHead.innerHTML = "";
-    tablaBody.innerHTML = "";
-    return;
-  }
-
   estadoPrenda.textContent = itemOriginal.aliasOf
-    ? `${itemOriginal.label} usa el mismo tallaje que ${MEDIDAS[itemOriginal.aliasOf].label}.`
+    ? `${itemOriginal.label} usa el mismo tallaje que ${MEDIDAS[itemOriginal.aliasOf].label}`
     : `Tabla activa: ${itemOriginal.label}`;
 
   renderCampos(item.fields);
@@ -87,25 +69,17 @@ function renderCampos(fields) {
   medidasForm.innerHTML = "";
 
   fields.forEach((field) => {
-    const wrapper = document.createElement("div");
-    wrapper.className = "field-group";
-
     const label = document.createElement("label");
     label.className = "label";
-    label.setAttribute("for", field.key);
     label.textContent = field.label;
 
     const input = document.createElement("input");
     input.className = "input";
     input.type = "number";
-    input.step = "0.1";
     input.id = field.key;
-    input.name = field.key;
-    input.placeholder = `Introduce ${field.label.toLowerCase()}`;
 
-    wrapper.appendChild(label);
-    wrapper.appendChild(input);
-    medidasForm.appendChild(wrapper);
+    medidasForm.appendChild(label);
+    medidasForm.appendChild(input);
   });
 }
 
@@ -113,27 +87,27 @@ function renderTabla(item) {
   tablaHead.innerHTML = "";
   tablaBody.innerHTML = "";
 
-  const headers = ["Talla", ...item.fields.map((f) => f.label)];
+  const headers = ["Talla", ...item.fields.map(f => f.label)];
 
   const trHead = document.createElement("tr");
-  headers.forEach((header) => {
+  headers.forEach(h => {
     const th = document.createElement("th");
-    th.textContent = header;
+    th.textContent = h;
     trHead.appendChild(th);
   });
+
   tablaHead.appendChild(trHead);
 
-  item.sizes.forEach((sizeRow) => {
+  item.sizes.forEach(size => {
     const tr = document.createElement("tr");
 
     const tdTalla = document.createElement("td");
-    tdTalla.textContent = sizeRow.talla;
+    tdTalla.textContent = size.talla;
     tr.appendChild(tdTalla);
 
-    item.fields.forEach((field) => {
+    item.fields.forEach(field => {
       const td = document.createElement("td");
-      td.textContent =
-        sizeRow[field.key] !== undefined ? sizeRow[field.key] : "-";
+      td.textContent = size[field.key] ?? "-";
       tr.appendChild(td);
     });
 
@@ -141,121 +115,86 @@ function renderTabla(item) {
   });
 }
 
-function getValoresFormulario(fields) {
-  const valores = {};
-
-  fields.forEach((field) => {
-    const input = document.getElementById(field.key);
-    const value = parseFloat(input.value);
-
-    if (!isNaN(value)) {
-      valores[field.key] = value;
-    }
-  });
-
-  return valores;
-}
-
 function calcularTalla() {
   const item = resolveItem(PRENDA_ACTUAL);
+  const valores = {};
 
-  if (!item) return;
+  item.fields.forEach(field => {
+    const val = parseFloat(document.getElementById(field.key).value);
+    if (!isNaN(val)) valores[field.key] = val;
+  });
 
-  const valores = getValoresFormulario(item.fields);
-  const keys = Object.keys(valores);
-
-  if (keys.length === 0) {
-    resultado.className = "resultado";
-    resultado.innerHTML = "Debes introducir al menos una medida.";
-    detalleComparacion.innerHTML = "";
-    return;
-  }
-
-  let mejorTalla = null;
+  let mejor = null;
   let mejorScore = Infinity;
-  let mejorDetalle = null;
+  let detalle = [];
 
-  item.sizes.forEach((sizeRow) => {
+  item.sizes.forEach(size => {
     let score = 0;
-    let detalle = [];
+    let tempDetalle = [];
 
-    keys.forEach((key) => {
-      const diferencia = Math.abs(valores[key] - sizeRow[key]);
-      score += diferencia;
-      detalle.push({
-        campo: item.fields.find((f) => f.key === key)?.label || key,
+    Object.keys(valores).forEach(key => {
+      let valorAjustado = valores[key];
+
+      // 🔥 HOLGURA FIJA
+      if (key === "pecho") {
+        valorAjustado = valores[key] + 2;
+      }
+
+      const diff = Math.abs(valorAjustado - size[key]);
+      score += diff;
+
+      tempDetalle.push({
+        campo: key,
         introducido: valores[key],
-        tabla: sizeRow[key],
-        diferencia: diferencia
+        tabla: size[key],
+        diferencia: diff
       });
     });
 
     if (score < mejorScore) {
       mejorScore = score;
-      mejorTalla = sizeRow;
-      mejorDetalle = detalle;
+      mejor = size;
+      detalle = tempDetalle;
     }
   });
 
   resultado.className = "resultado";
-  resultado.innerHTML = `Talla recomendada: <strong>${mejorTalla.talla}</strong>`;
+  resultado.innerHTML = `
+  Talla recomendada: <strong>${mejor.talla}</strong>
+  <br><br>
+  <small>
+  La talla recomendada se ha calculado aplicando una holgura de 2 cm en el contorno de pecho, 
+  teniendo en cuenta que las medidas corresponden a prendas terminadas.<br><br>
+  Las medidas pueden variar ligeramente en función del diseño del modelo 
+  y del comportamiento de los tejidos.
+  </small>
+  `;
 
-  renderDetalle(mejorDetalle);
+  renderDetalle(detalle);
 }
 
 function renderDetalle(detalle) {
-  if (!detalle || !detalle.length) {
-    detalleComparacion.innerHTML = "";
-    return;
-  }
+  let html = "<table class='tabla'><tr><th>Campo</th><th>Cliente</th><th>Tabla</th><th>Diferencia</th></tr>";
 
-  let html = `
-    <div style="margin-top:12px;">
-      <h4 style="margin-bottom:10px;">Comparación de medidas</h4>
-      <div class="table-wrap">
-        <table class="tabla">
-          <thead>
-            <tr>
-              <th>Campo</th>
-              <th>Introducido</th>
-              <th>Tabla</th>
-              <th>Diferencia</th>
-            </tr>
-          </thead>
-          <tbody>
-  `;
-
-  detalle.forEach((item) => {
-    html += `
-      <tr>
-        <td>${item.campo}</td>
-        <td>${item.introducido}</td>
-        <td>${item.tabla}</td>
-        <td>${item.diferencia}</td>
-      </tr>
-    `;
+  detalle.forEach(d => {
+    html += `<tr>
+      <td>${d.campo}</td>
+      <td>${d.introducido}</td>
+      <td>${d.tabla}</td>
+      <td>${d.diferencia}</td>
+    </tr>`;
   });
 
-  html += `
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-
+  html += "</table>";
   detalleComparacion.innerHTML = html;
 }
 
 function limpiarFormulario() {
-  const inputs = medidasForm.querySelectorAll("input");
-  inputs.forEach((input) => {
-    input.value = "";
-  });
+  document.querySelectorAll("input").forEach(i => i.value = "");
   resetResultado();
 }
 
 function resetResultado() {
-  resultado.className = "resultado resultado--empty";
   resultado.textContent = "Aún no se ha calculado ninguna talla.";
   detalleComparacion.innerHTML = "";
 }
