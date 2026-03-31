@@ -1,3 +1,10 @@
+// 🔒 TALLAS QUE NO TRABAJAMOS
+const TALLAS_EXCLUIDAS = ["7", "9", "11"];
+
+function tallaPermitida(talla) {
+  return !TALLAS_EXCLUIDAS.some(t => talla.includes(t));
+}
+
 let MEDIDAS = {};
 let PRENDA_ACTUAL = null;
 
@@ -98,21 +105,23 @@ function renderTabla(item) {
 
   tablaHead.appendChild(trHead);
 
-  item.sizes.forEach(size => {
-    const tr = document.createElement("tr");
+  item.sizes
+    .filter(size => tallaPermitida(size.talla))
+    .forEach(size => {
+      const tr = document.createElement("tr");
 
-    const tdTalla = document.createElement("td");
-    tdTalla.textContent = size.talla;
-    tr.appendChild(tdTalla);
+      const tdTalla = document.createElement("td");
+      tdTalla.textContent = size.talla;
+      tr.appendChild(tdTalla);
 
-    item.fields.forEach(field => {
-      const td = document.createElement("td");
-      td.textContent = size[field.key] ?? "-";
-      tr.appendChild(td);
+      item.fields.forEach(field => {
+        const td = document.createElement("td");
+        td.textContent = size[field.key] ?? "-";
+        tr.appendChild(td);
+      });
+
+      tablaBody.appendChild(tr);
     });
-
-    tablaBody.appendChild(tr);
-  });
 }
 
 function calcularTalla() {
@@ -124,41 +133,49 @@ function calcularTalla() {
     if (!isNaN(val)) valores[field.key] = val;
   });
 
+  if (Object.keys(valores).length === 0) {
+    resultado.innerHTML = "Debes introducir al menos una medida.";
+    return;
+  }
+
   let mejor = null;
   let mejorScore = Infinity;
   let detalle = [];
 
-  item.sizes.forEach(size => {
-    let score = 0;
-    let tempDetalle = [];
+  item.sizes
+    .filter(size => tallaPermitida(size.talla))
+    .forEach(size => {
 
-    Object.keys(valores).forEach(key => {
-      let valorAjustado = valores[key];
+      let score = 0;
+      let tempDetalle = [];
 
-      // 🔥 HOLGURA FIJA
-      if (key === "pecho") {
-        valorAjustado = valores[key] + 2;
-      }
+      Object.keys(valores).forEach(key => {
 
-      const diff = Math.abs(valorAjustado - size[key]);
-      score += diff;
+        let valorAjustado = valores[key];
 
-      tempDetalle.push({
-        campo: key,
-        introducido: valores[key],
-        tabla: size[key],
-        diferencia: diff
+        // 🔥 HOLGURA FIJA
+        if (key === "pecho") {
+          valorAjustado = valores[key] + 2;
+        }
+
+        const diff = Math.abs(valorAjustado - size[key]);
+        score += diff;
+
+        tempDetalle.push({
+          campo: key,
+          introducido: valores[key],
+          tabla: size[key],
+          diferencia: diff
+        });
       });
+
+      if (score < mejorScore) {
+        mejorScore = score;
+        mejor = size;
+        detalle = tempDetalle;
+      }
     });
 
-    if (score < mejorScore) {
-      mejorScore = score;
-      mejor = size;
-      detalle = tempDetalle;
-    }
-  });
-
-  resultado.className = "resultado";
   resultado.innerHTML = `
   Talla recomendada: <strong>${mejor.talla}</strong>
   <br><br>
