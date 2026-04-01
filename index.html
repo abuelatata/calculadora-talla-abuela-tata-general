@@ -11,7 +11,7 @@
     <header class="hero">
       <p class="hero__eyebrow">Ceremonia</p>
       <h1 class="hero__brand">Abuela Tata</h1>
-      <button onclick="window.location.href='https://abuelatata.github.io/area-profesional-ceremonia-26-abuela-tata/'" class="btn-back">
+      <button type="button" onclick="salirCalculadora()" class="btn-back">
   ← Volver al Área Profesional
 </button>
       <h2 class="hero__title">Calculadora de tallas</h2>
@@ -67,5 +67,10 @@
   </main>
 
   <script src="app.js"></script>
+  <script>
+  function salirCalculadora() {
+    window.top.location.href = "https://abuelatata.github.io/area-profesional-ceremonia-26-abuela-tata/";
+  }
+</script>
 </body>
 </html>
